@@ -1,13 +1,13 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:glio/views/app/widgets/chosen_action_button_widget.dart';
 import 'package:glio/views/operation/widgets/income_total_display_widget.dart';
-import 'package:intl/intl.dart';
 import '../../../consts/app_colors.dart';
 import '../../../consts/app_text_styles/home_screen_text_style.dart';
 import '../../../consts/app_text_styles/operation_text_style.dart';
-import '../../../consts/app_text_styles/settings_text_style.dart';
+
 import '../../../util/shared_pref_service.dart';
 import 'constructor_screen.dart';
 
@@ -48,7 +48,18 @@ class _FinanceScreenState extends State<FinanceScreen> {
   }
 
   double _calculateTotalIncome() {
-    return operations.fold(0, (sum, op) => sum + (op['amount'] as double));
+    return operations.fold(0, (sum, op) {
+      final amount = op['amount'] as double;
+      final type = op['type'] as String;
+
+      if (type == 'Income') {
+        return sum + amount;
+      } else if (type == 'Spendings') {
+        return sum - amount;
+      } else {
+        return sum;
+      }
+    });
   }
 
   void _addOperation(Map<String, dynamic> operation) async {
@@ -87,63 +98,19 @@ class _FinanceScreenState extends State<FinanceScreen> {
                     width: width90Percent,
                     child: Stack(
                       children: [
-                        // Positioned(
-                        //   left: _operationType == 'Income'
-                        //       ? 0
-                        //       : width90Percent / 2,
-                        //   top: 0,
-                        //   bottom: 0,
-                        //   width: width90Percent / 2,
-                        //   child: Container(
-                        //     decoration: BoxDecoration(
-                        //       color: Colors.white,
-                        //       borderRadius: _operationType == 'Income'
-                        //           ? const BorderRadius.only(
-                        //               topLeft: Radius.circular(15.0),
-                        //               bottomLeft: Radius.circular(15.0),
-                        //             )
-                        //           : const BorderRadius.only(
-                        //               topRight: Radius.circular(15.0),
-                        //               bottomRight: Radius.circular(15.0),
-                        //             ),
-                        //     ),
-                        //   ),
-                        // ),
-                        // Positioned(
-                        //   left: _operationType == 'Income'
-                        //       ? width90Percent / 2
-                        //       : 0,
-                        //   top: 0,
-                        //   bottom: 0,
-                        //   width: width90Percent / 2,
-                        //   child: Container(
-                        //     decoration: BoxDecoration(
-                        //       color: AppColors.lightGreyColor,
-                        //       borderRadius: _operationType == 'Income'
-                        //           ? const BorderRadius.only(
-                        //               topRight: Radius.circular(15.0),
-                        //               bottomRight: Radius.circular(15.0),
-                        //             )
-                        //           : const BorderRadius.only(
-                        //               topLeft: Radius.circular(15.0),
-                        //               bottomLeft: Radius.circular(15.0),
-                        //             ),
-                        //     ),
-                        //   ),
-                        // ),
                         Center(
                           child: ToggleButtons(
                             isSelected: _isSelected,
                             onPressed: _toggleOperationType,
                             borderRadius: BorderRadius.circular(5.0),
-                            selectedColor: Colors.white,
-                            fillColor: Colors.white.withOpacity(0.25),
+                            selectedColor: AppColors.darkBlueColor,
+                            fillColor: AppColors.darkBlueColor,
                             renderBorder: false,
                             children: <Widget>[
                               Container(
                                 padding: EdgeInsets.symmetric(
-                                    horizontal: size.width * 0.13,
-                                    vertical: size.height * 0.017),
+                                    horizontal: size.width * 0.14,
+                                    vertical: size.height * 0.016),
                                 decoration: BoxDecoration(
                                   color: _isSelected[0]
                                       ? AppColors.lightBlueColor
@@ -159,15 +126,15 @@ class _FinanceScreenState extends State<FinanceScreen> {
                                   'Income',
                                   style: TextStyle(
                                     color: _isSelected[0]
-                                        ? Colors.black
-                                        : Colors.white.withOpacity(0.35),
+                                        ? AppColors.whiteColor
+                                        : AppColors.whiteColor,
                                   ),
                                 ),
                               ),
                               Container(
                                 padding: EdgeInsets.symmetric(
-                                    horizontal: size.width * 0.11,
-                                    vertical: size.height * 0.017),
+                                    horizontal: size.width * 0.125,
+                                    vertical: size.height * 0.016),
                                 decoration: BoxDecoration(
                                   color: _isSelected[1]
                                       ? AppColors.lightBlueColor
@@ -183,8 +150,8 @@ class _FinanceScreenState extends State<FinanceScreen> {
                                   'Spendings',
                                   style: TextStyle(
                                     color: _isSelected[1]
-                                        ? Colors.black
-                                        : Colors.white.withOpacity(0.35),
+                                        ? AppColors.whiteColor
+                                        : AppColors.whiteColor,
                                   ),
                                 ),
                               ),
@@ -196,6 +163,9 @@ class _FinanceScreenState extends State<FinanceScreen> {
                   ),
                 );
               },
+            ),
+            SizedBox(
+              height: size.height * 0.01,
             ),
             Expanded(
               child: _filteredOperations.isEmpty
@@ -230,13 +200,14 @@ class _FinanceScreenState extends State<FinanceScreen> {
                         ],
                       ),
                     )
-                  : Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        IncomeTotalDisplay(totalIncome: totalIncome),
-                        ListView.builder(
-                          itemCount: _filteredOperations.length,
-                          itemBuilder: (ctx, index) {
+                  : CustomScrollView(
+                      slivers: [
+                        SliverToBoxAdapter(
+                            child:
+                                IncomeTotalDisplay(totalIncome: totalIncome)),
+                        SliverList(
+                          delegate: SliverChildBuilderDelegate(
+                              (BuildContext context, int index) {
                             return Padding(
                               padding: const EdgeInsets.all(8.0),
                               child: Container(
@@ -265,7 +236,7 @@ class _FinanceScreenState extends State<FinanceScreen> {
                                 ),
                               ),
                             );
-                          },
+                          }, childCount: _filteredOperations.length),
                         ),
                       ],
                     ),

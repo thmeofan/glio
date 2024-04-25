@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 
 import '../../../consts/app_colors.dart';
-import '../../../consts/app_text_styles/categories_text_style.dart';
 import '../../../data/model/quiz_model.dart';
 
 class ProgressBar extends StatelessWidget {
@@ -40,20 +39,6 @@ class ProgressBar extends StatelessWidget {
                   bottomRight: Radius.circular(5),
                 ),
                 color: AppColors.lightBlueColor,
-              ),
-            ),
-          ),
-          Positioned.fill(
-            child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 20),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.end,
-                children: [
-                  Text(
-                    '${(progress * 100).toStringAsFixed(0)}%',
-                    style: CategoriesTextStyle.resultSubtitle,
-                  ),
-                ],
               ),
             ),
           ),

@@ -7,6 +7,8 @@ import '../../../consts/app_colors.dart';
 import '../../../consts/app_text_styles/categories_text_style.dart';
 import '../../../consts/app_text_styles/settings_text_style.dart';
 import '../../../data/model/quiz_model.dart';
+import '../../../data/model/quiz_progress_model.dart';
+import '../../../data/repository/quiz_progress_manager.dart';
 import '../../app/widgets/chosen_action_button_widget.dart';
 import '../widgets/option_widget.dart';
 import '../widgets/progress_bar.dart';
@@ -41,6 +43,15 @@ class _QuestionScreenState extends State<QuestionScreen> {
       }
     }
     return score;
+  }
+
+  void saveQuizProgress() {
+    int score = calculateScore();
+    QuizProgress progress = QuizProgress(
+      score: score,
+      totalQuestions: widget.questions.length,
+    );
+    QuizProgressManager.saveQuizProgress(progress);
   }
 
   void resetQuiz() {
@@ -135,7 +146,7 @@ class _QuestionScreenState extends State<QuestionScreen> {
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
             SizedBox(
-              height: size.height * 0.015,
+              height: size.height * 0.005,
             ),
             Center(
               child: Text(
@@ -145,15 +156,14 @@ class _QuestionScreenState extends State<QuestionScreen> {
               ),
             ),
             SizedBox(
-              height: size.height * 0.01,
+              height: size.height * 0.005,
             ),
             Center(
               child: Column(
                 children: [
                   SvgPicture.asset(
                     resultImage,
-                    width: size.width * 0.8,
-                    height: size.height * 0.25,
+                    height: size.height * 0.225,
                   ),
                   Text(
                     resultText,
@@ -168,6 +178,7 @@ class _QuestionScreenState extends State<QuestionScreen> {
               text: 'Continue',
               onTap: () {
                 resetQuiz();
+                saveQuizProgress();
                 Navigator.of(context).pop();
               },
             ),
@@ -244,6 +255,6 @@ class _QuestionScreenState extends State<QuestionScreen> {
         return AppColors.lightBlueColor;
       }
     }
-    return AppColors.peachColor;
+    return AppColors.lightBlueColor;
   }
 }

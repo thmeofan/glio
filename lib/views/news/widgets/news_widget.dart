@@ -52,7 +52,7 @@ class NewsWidget extends StatelessWidget {
                     children: [
                       Text(
                         newsModel.title,
-                        maxLines: 3,
+                        maxLines: 2,
                         style: NewsTextStyle.title,
                       ),
                       Spacer(),
@@ -61,7 +61,7 @@ class NewsWidget extends StatelessWidget {
                         style: NewsTextStyle.date,
                       ),
                       SizedBox(
-                        height: screenSize.height * 0.01,
+                        height: screenSize.height * 0.005,
                       )
                     ],
                   ),
@@ -72,6 +72,5 @@ class NewsWidget extends StatelessWidget {
         ),
       ),
     );
-    ;
   }
 }

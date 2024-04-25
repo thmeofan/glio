@@ -43,13 +43,13 @@ class OperationTextStyle {
     fontSize: 14.0,
     height: 20 / 14,
     fontWeight: FontWeight.w400,
-    //color: AppColors.darkGreyColor,
+    color: AppColors.whiteColor,
   );
   static TextStyle date = TextStyle(
     fontFamily: 'SF Pro Display',
     fontSize: 10.0,
     height: 12 / 10,
     fontWeight: FontWeight.w400,
-    // color: AppColors.darkGreyColor,
+    color: AppColors.whiteColor,
   );
 }

@@ -152,14 +152,14 @@ class _ConstructorScreenState extends State<ConstructorScreen> {
                   isSelected: _isSelected,
                   onPressed: _toggleOperationType,
                   borderRadius: BorderRadius.circular(5.0),
-                  selectedColor: Colors.white,
-                  fillColor: Colors.white.withOpacity(0.25),
+                  selectedColor: AppColors.darkBlueColor,
+                  fillColor: AppColors.darkBlueColor,
                   renderBorder: false,
                   children: <Widget>[
                     Container(
                       padding: EdgeInsets.symmetric(
-                          horizontal: size.width * 0.13,
-                          vertical: size.height * 0.017),
+                          horizontal: size.width * 0.14,
+                          vertical: size.height * 0.016),
                       decoration: BoxDecoration(
                         color: _isSelected[0]
                             ? AppColors.lightBlueColor
@@ -182,8 +182,8 @@ class _ConstructorScreenState extends State<ConstructorScreen> {
                     ),
                     Container(
                       padding: EdgeInsets.symmetric(
-                          horizontal: size.width * 0.11,
-                          vertical: size.height * 0.017),
+                          horizontal: size.width * 0.125,
+                          vertical: size.height * 0.016),
                       decoration: BoxDecoration(
                         color: _isSelected[1]
                             ? AppColors.lightBlueColor

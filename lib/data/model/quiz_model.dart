@@ -1,7 +1,5 @@
 class Question {
   final String text;
-
-  // final Category;
   final List<Option> options;
   bool isLocked;
   Option? selectedOption;
@@ -14,8 +12,6 @@ class Question {
     this.selectedOption,
   });
 }
-
-// enum Category { rules, teams, players, clubHistory }
 
 class Option {
   final String text;

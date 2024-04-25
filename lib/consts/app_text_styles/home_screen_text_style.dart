@@ -54,7 +54,7 @@ class HomeScreenTextStyle {
     fontFamily: 'Roboto',
     fontSize: 16.0,
     fontWeight: FontWeight.w300,
-    color: AppColors.peachColor,
+    //  color: AppColors.peachColor,
   );
   static TextStyle emptyTitle = const TextStyle(
     fontFamily: 'Roboto',

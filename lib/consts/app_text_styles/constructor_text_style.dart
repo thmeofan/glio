@@ -36,6 +36,6 @@ class ConstructorTextStyle {
     fontFamily: 'Roboto',
     fontSize: 14.0,
     fontWeight: FontWeight.w400,
-    color: AppColors.peachColor,
+    // color: AppColors.peachColor,
   );
 }

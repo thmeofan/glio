@@ -4,7 +4,7 @@ import '../app_colors.dart';
 class NewsTextStyle {
   static const TextStyle title = TextStyle(
     fontFamily: 'Inter',
-    fontSize: 18.0,
+    fontSize: 16.0,
     fontWeight: FontWeight.w400,
     color: Colors.white,
   );
@@ -17,7 +17,7 @@ class NewsTextStyle {
   );
   static const TextStyle date = TextStyle(
     fontFamily: 'Inter',
-    fontSize: 14.0,
+    fontSize: 12.0,
     height: 18 / 12,
     fontWeight: FontWeight.w500,
     color: AppColors.lightBlueColor,
